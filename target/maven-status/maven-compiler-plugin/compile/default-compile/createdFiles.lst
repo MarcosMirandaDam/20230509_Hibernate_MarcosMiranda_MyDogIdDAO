@@ -1,0 +1,11 @@
+NewMain.class
+com\mycompany\zhibernate\modelo\Perro.class
+com\mycompany\zhibernate\dao\MontaDAO.class
+com\mycompany\zhibernate\dao\PerroDAO.class
+com\mycompany\zhibernate\dao\PerroDAOImplementacion.class
+com\mycompany\zhibernate\dao\PersonaDAO.class
+com\mycompany\zhibernate\dao\MontaDAOImplementacion.class
+com\mycompany\zhibernate\dao\PersonaDAOImplementacion.class
+com\mycompany\zhibernate\modelo\Persona.class
+com\mycompany\zhibernate\util\HibernateUtil.class
+com\mycompany\zhibernate\modelo\Monta.class
