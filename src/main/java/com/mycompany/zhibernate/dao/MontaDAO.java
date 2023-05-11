@@ -4,7 +4,7 @@ import com.mycompany.zhibernate.modelo.Monta;
 import java.util.List;
 
 /**
- *
+ * interface de la clase Monta
  * @author Marcos Miranda
  */
 public interface MontaDAO {
@@ -25,9 +25,9 @@ public interface MontaDAO {
     void eliminar(Monta monta);
 
     
-    // Buscar monta por nombre (ignorando mayúsculas y minúsculas)
-    List<Monta> findByNombreContainingIgnoreCase(String nombre);
+    // Buscar monta por raza (ignorando mayúsculas y minúsculas)
+    List<Monta> findByRazaContainingIgnoreCase(String raza);
 
-    // Buscar monta por nombre y ordenar por numero de monta de forma descendente
-    List<Monta> findByNombreOrderByNombreDesc(String  nombre);
+    // Buscar monta por raza y ordenar por fecha de monta de forma descendente
+    List<Monta> findByRazaOrderByFechaMontaDesc(String  raza);
 }

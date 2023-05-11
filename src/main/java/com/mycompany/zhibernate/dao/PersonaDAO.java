@@ -4,7 +4,7 @@ import com.mycompany.zhibernate.modelo.Persona;
 import java.util.List;
 
 /**
- *
+ * interface de la clase Persona
  * @author Marcos Miranda
  */
 public interface PersonaDAO {

@@ -4,7 +4,7 @@ import com.mycompany.zhibernate.modelo.Perro;
 import java.util.List;
 
 /**
- *
+ * interface de la clase Perro
  * @author Marcos Miranda
  */
 public interface PerroDAO {

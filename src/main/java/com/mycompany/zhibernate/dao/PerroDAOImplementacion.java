@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 /**
- *
+ * clase que implementa la interface PerroDAO
  * @author Marcos Miranda
  */
 public class PerroDAOImplementacion implements PerroDAO{
@@ -20,6 +20,10 @@ public class PerroDAOImplementacion implements PerroDAO{
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * metodo que crea un perro
+     * @param perro 
+     */
     @Override
     public void crear(Perro perro) {
         Transaction transaction = null;
@@ -37,6 +41,11 @@ public class PerroDAOImplementacion implements PerroDAO{
         }
     }
 
+    /**
+     * metodo que retorna un perro determinado por su id
+     * @param id
+     * @return 
+     */
     @Override
     public Perro obtenerPorId(int id) {
         Session session = sessionFactory.openSession();
@@ -45,14 +54,22 @@ public class PerroDAOImplementacion implements PerroDAO{
         return perro;
     }
 
+    /**
+     * metodo que lista los perros 
+     * @return 
+     */
     @Override
     public List<Perro> obtenerTodos() {
         Session session = sessionFactory.openSession();
-        List<Perro> listaPerros = session.createQuery("from perro", Perro.class).list();
+        List<Perro> listaPerros = session.createQuery("from Perro", Perro.class).list();
         session.close();
         return listaPerros;
     }
 
+    /**
+     * metodo que actualiza un perro tras su modificacion
+     * @param perro 
+     */
     @Override
     public void actualizar(Perro perro) {
        Session session = sessionFactory.openSession();
@@ -62,6 +79,10 @@ public class PerroDAOImplementacion implements PerroDAO{
         session.close();
     }
 
+    /**
+     * metodo que elimina un perro determinado por parametro
+     * @param perro 
+     */
     @Override
     public void eliminar(Perro perro) {
         Session session = sessionFactory.openSession();
@@ -72,10 +93,15 @@ public class PerroDAOImplementacion implements PerroDAO{
         
     }
 
+    /**
+     * metodo que lista un perro determinado por su nombre
+     * @param nombre
+     * @return 
+     */
     @Override
     public List<Perro> findByNombreContainingIgnoreCase(String nombre) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Perro> query = session.createQuery("FROM perro WHERE lower(nombre) LIKE :nombre", Perro.class);
+            Query<Perro> query = session.createQuery("FROM Perro WHERE lower(nombre) LIKE :nombre", Perro.class);
             query.setParameter("nombre", "%" + nombre.toLowerCase() + "%");
             return query.list();
 
@@ -86,10 +112,15 @@ public class PerroDAOImplementacion implements PerroDAO{
         }
     }
 
+    /**
+     * metodo que lista un perro determinado por su nombre ordenados por numero
+     * @param nombre
+     * @return 
+     */
     @Override
     public List<Perro> findByNombreOrderByNombreDesc(String nombre) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Perro> query = session.createQuery("FROM perro WHERE nombre = :nombre ORDER BY numero DESC", Perro.class);
+            Query<Perro> query = session.createQuery("FROM Perro WHERE nombre = :nombre ORDER BY numero DESC", Perro.class);
             query.setParameter("nombre", nombre);
             return query.list();
         } catch (Exception e) {

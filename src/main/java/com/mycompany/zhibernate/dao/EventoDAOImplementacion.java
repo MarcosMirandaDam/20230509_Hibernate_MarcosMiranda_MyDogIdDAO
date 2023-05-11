@@ -1,6 +1,6 @@
 package com.mycompany.zhibernate.dao;
 
-import com.mycompany.zhibernate.modelo.Monta;
+import com.mycompany.zhibernate.modelo.Evento;
 import com.mycompany.zhibernate.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
@@ -9,99 +9,99 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 /**
- * clase que implementa la interface MontaDAO
+ * Clase que implementa los metodos abstractos de la interface EventoDAO
  * @author Marcos Miranda
  */
-public class MontaDAOImplementacion implements MontaDAO{
+public class EventoDAOImplementacion implements EventoDAO{
     
     private SessionFactory sessionFactory;
     
-    public MontaDAOImplementacion(SessionFactory sessionFactory) {
+    public EventoDAOImplementacion(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     /**
-     * metodo que crea una monta
-     * @param monta 
+     * metodo que crea un evento
+     * @param evento 
      */
     @Override
-    public void crear(Monta monta) {
+    public void crear(Evento evento) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(monta);
+            session.save(evento);
             transaction.commit();
             
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.err.println("Error al crear el perro: " + e.getMessage());
+            System.err.println("Error al crear la monta: " + e.getMessage());
           
         }
     }
 
     /**
-     * metodo que devuelve una monta por id determinado por el usuario
+     * metodo que obtiene un evento insertando el id
      * @param id
      * @return 
      */
     @Override
-    public Monta obtenerPorId(int id) {
+    public Evento obtenerPorId(int id) {
         Session session = sessionFactory.openSession();
-        Monta monta = session.get(Monta.class, id);
+        Evento evento = session.get(Evento.class, id);
         session.close();
-        return monta;
+        return evento;
     }
 
     /**
-     * metodo que lista las montas
+     * metodo que devuelve una lista con todos los eventos 
      * @return 
      */
     @Override
-    public List<Monta> obtenerTodos() {
+    public List<Evento> obtenerTodos() {
         Session session = sessionFactory.openSession();
-        List<Monta> listaMontas = session.createQuery("from Monta", Monta.class).list();
+        List<Evento> listaEventos = session.createQuery("from Evento", Evento.class).list();
         session.close();
-        return listaMontas;
+        return listaEventos;
     }
 
     /**
-     * metodo que actualiza una monta tras un cambio realizado
-     * @param monta 
+     * metodo que actualiza un evento tras un cambio el el mismo
+     * @param evento 
      */
     @Override
-    public void actualizar(Monta monta) {
+    public void actualizar(Evento evento) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(monta);
+        session.update(evento);
         transaction.commit();
         session.close();
     }
 
     /**
-     * metodo que elimina una monta
-     * @param monta 
+     * metodo que elimina un evento
+     * @param evento 
      */
     @Override
-    public void eliminar(Monta monta) {
+    public void eliminar(Evento evento) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(monta);
+        session.delete(evento);
         transaction.commit();
         session.close(); 
     }
 
     /**
-     * metodo que lista las montas determinadas por raza
-     * @param raza
+     * metodo que lista los eventos de una clase determinada por el usuario
+     * @param clase
      * @return 
      */
     @Override
-    public List<Monta> findByRazaContainingIgnoreCase(String raza) {
+    public List<Evento> findByClaseContainingIgnoreCase(String clase) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Monta> query = session.createQuery("FROM Monta WHERE lower(raza) LIKE :raza", Monta.class);
-            query.setParameter("raza", "%" + raza.toLowerCase() + "%");
+            Query<Evento> query = session.createQuery("FROM Evento WHERE lower(clase) LIKE :clase", Evento.class);
+            query.setParameter("clase", "%" + clase.toLowerCase() + "%");
             return query.list();
 
             
@@ -112,15 +112,15 @@ public class MontaDAOImplementacion implements MontaDAO{
     }
 
     /**
-     * metodo que lista las montas determinadas por raza ordenadas por fecha
-     * @param raza
+     * metodo que lista los eventos de una clase determinada por el usuario y los ordena por fecha
+     * @param clase
      * @return 
      */
     @Override
-    public List<Monta> findByRazaOrderByFechaMontaDesc(String raza) {
+    public List<Evento> findByClaseOrderByFechaDesc(String clase) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Monta> query = session.createQuery("FROM Monta WHERE raza = :raza ORDER BY fechaMonta DESC", Monta.class);
-            query.setParameter("raza", raza);
+            Query<Evento> query = session.createQuery("FROM Evento WHERE clase = :clase ORDER BY fecha DESC", Evento.class);
+            query.setParameter("clase", clase);
             return query.list();
         } catch (Exception e) {
             e.printStackTrace();

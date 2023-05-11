@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 /**
- *
+ * clase que implementa la interface PersonaDAO
  * @author Marcos Miranda
  */
 public class PersonaDAOImplementacion implements PersonaDAO{
@@ -20,6 +20,10 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * metodo que crea una persona
+     * @param persona 
+     */
     @Override
     public void crear(Persona persona) {
         Transaction transaction = null;
@@ -37,6 +41,11 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         }
     }
 
+    /**
+     * metodo que retorna una persona determinada por su id
+     * @param id
+     * @return 
+     */
     @Override
     public Persona obtenerPorId(int id) {
         Session session = sessionFactory.openSession();
@@ -45,14 +54,22 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         return perro;
     }
 
+    /**
+     * metodo que lista todas las personas
+     * @return 
+     */
     @Override
     public List<Persona> obtenerTodos() {
         Session session = sessionFactory.openSession();
-        List<Persona> listaPersonas = session.createQuery("FROM persona", Persona.class).list();
+        List<Persona> listaPersonas = session.createQuery("FROM Persona", Persona.class).list();
         session.close();
         return listaPersonas;
     }
 
+    /**
+     * metodo que actualiza una persona
+     * @param persona 
+     */
     @Override
     public void actualizar(Persona persona) {
         Session session = sessionFactory.openSession();
@@ -62,6 +79,10 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         session.close();
     }
 
+    /**
+     * metodo que elimina una persona
+     * @param persona 
+     */
     @Override
     public void eliminar(Persona persona) {
         Session session = sessionFactory.openSession();
@@ -71,10 +92,15 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         session.close(); 
     }
 
+    /**
+     * metodo que lista persona determinada por su nombre
+     * @param nombre
+     * @return 
+     */
     @Override
     public List<Persona> findByNombreContainingIgnoreCase(String nombre) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Persona> query = session.createQuery("FROM persona WHERE lower(nombre) LIKE :nombre", Persona.class);
+            Query<Persona> query = session.createQuery("FROM Persona WHERE lower(nombre) LIKE :nombre", Persona.class);
             query.setParameter("nombre", "%" + nombre.toLowerCase() + "%");
             return query.list();
 
@@ -85,10 +111,15 @@ public class PersonaDAOImplementacion implements PersonaDAO{
         }
     }
 
+    /**
+     * metodo que lista persona determinada por su nombre ordenadas por numero
+     * @param nombre
+     * @return 
+     */
     @Override
     public List<Persona> findByNombreOrderByNombreDesc(String nombre) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Persona> query = session.createQuery("FROM persona WHERE nombre = :nombre ORDER BY numero DESC", Persona.class);
+            Query<Persona> query = session.createQuery("FROM Persona WHERE nombre = :nombre ORDER BY numero DESC", Persona.class);
             query.setParameter("nombre", nombre);
             return query.list();
         } catch (Exception e) {

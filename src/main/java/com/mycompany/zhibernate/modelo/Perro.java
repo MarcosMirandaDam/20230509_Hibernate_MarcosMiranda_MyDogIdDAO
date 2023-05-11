@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -48,8 +51,21 @@ public class Perro implements Serializable{
     @Column(name="precio")
     private float precio;
 
-    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)             //un perro tiene una lista de montas
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)             //un perro tiene una lista de montas
     private List<Monta>listaMontas;
+    
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="perro_RegistroSalud", joinColumns={@JoinColumn(name="IdPerro")}, inverseJoinColumns={@JoinColumn(name="IdRegistroSalud")})
+    private List<RegistroSalud> registrosSalud;
+    
+    
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="Perro_Evento", joinColumns={@JoinColumn(name="IdPerro")}, inverseJoinColumns={@JoinColumn(name="IdEvento")})
+    private List<Evento> eventos;
+    
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="Perro_Formacion", joinColumns={@JoinColumn(name="IdPerro")}, inverseJoinColumns={@JoinColumn(name="IdFormacion")})
+    private List<Formacion> formaciones;
     
     
     @Override

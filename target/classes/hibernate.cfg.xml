@@ -15,7 +15,11 @@
 
         <mapping class="com.mycompany.zhibernate.modelo.Perro" />
         <mapping class="com.mycompany.zhibernate.modelo.Persona" />
-         <mapping class="com.mycompany.zhibernate.modelo.Monta" />
+        <mapping class="com.mycompany.zhibernate.modelo.Monta" />
+        <mapping class="com.mycompany.zhibernate.modelo.RegistroSalud" />
+        <mapping class="com.mycompany.zhibernate.modelo.Evento" />
+        <mapping class="com.mycompany.zhibernate.modelo.Formacion" />
+         
         
          
         
